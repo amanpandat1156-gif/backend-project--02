@@ -1,8 +1,10 @@
+import "dotenv/config";
 import express from "express";
 
 const app = express();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 app.use(express.json());
 
 let teaData = [];
@@ -11,7 +13,7 @@ let nextId = 1;
 // add a new tea
 
 app.post("/teas", (req, res) => {
-    console.log("POST")
+  console.log("POST");
   const { name, price } = req.body;
   const newTea = { id: nextId++, name, price };
   teaData.push(newTea);
@@ -48,8 +50,8 @@ app.put("/teas/:id", (req, res) => {
 
 //delete tea
 app.delete("/teas/:id", (req, res) => {
-    console.log("delete")
-    console.log(req.params.id)
+  console.log("delete");
+  console.log(req.params.id);
   const index = teaData.findIndex((t) => t.id === parseInt(req.params.id));
   if (index === -1) {
     return res.status(404).send("tea not found");
